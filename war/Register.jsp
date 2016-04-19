@@ -1,5 +1,4 @@
 <%@page import="com.test.project.Hotel"%>
-<%@page import="java.util.List"%>
 <html>
 <head>
 <title>Register</title>
@@ -11,25 +10,17 @@
 </head>
 <body>
 	<form action="/registerUser" method="post">
-		<br> <input name="fName" id="fName" type="text"
-			placeholder="First Name" required> <input name="lName"
-			id="lName" type="text" placeholder="Last Name" required> <input
-			name="email" id="email" type="email" placeholder="Email" required>
-		<input name="age" id="age" type="number" placeholder="age" required>
+		<input name="fName" id="fName" type="text"placeholder="First Name" required><br>
+		<input name="lName" id="lName" type="text" placeholder="Last Name" required><br>
+		<input name="email" id="email" type="email" placeholder="Email" required><br>
+		<input type = "password" name ="password" id ="password" placeholder ="password" required><br>
+		<input name="age" id="age" type="number" placeholder="age" required><br>
 
-		<label>Hotel Name:</label> <select name="hotelId"
-			style="width: 234px; height: 17px;">
-			<% List<Hotel> hotels = (List<Hotel>) request.getAttribute("hotels");  %>
-
-			<%for(Hotel hotel: hotels) { %>
-			<option value="<%=hotel.getId()%>"><%=hotel.getName()%></option>
-			<%} %>
-
-		</select>
-		<input name="stars" id="stars" type="number" placeholder="stars" min="0" max ="5" required>
-		<br>
+		
 		 <input type="submit" value="submit">
 	</form>
+	<%String error = (String) request.getAttribute("Error"); %>
+	<p> <%=error%><p>
 </body>
 
 </html>

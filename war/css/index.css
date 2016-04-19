@@ -29,9 +29,7 @@ body{
 	display:flex;
 	flex-direction:column;
 	flex-grow:8.5;
-	background: url(http://d3c791hwb80q11.cloudfront.net/assets/themes/owls/blue/header_bottom-2187e77a73667d19bb9f4a150a0371d4.png) no-repeat;
-	
-	
+	background: url(http://d3c791hwb80q11.cloudfront.net/assets/themes/owls/blue/header_bottom-2187e77a73667d19bb9f4a150a0371d4.png) no-repeat;	
 }
 
 	
@@ -47,6 +45,9 @@ body{
 	display:flex;
 	width:50%;
 	align-items:center;	
+}
+.loginLink{
+	align-self: flex-end;
 }
 h1{
 	font-family:cursive;

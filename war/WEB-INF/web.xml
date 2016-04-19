@@ -7,12 +7,12 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 
     
 	<servlet>
-		<servlet-name>TestProject</servlet-name>
-		<servlet-class>com.test.project.TestProjectServlet</servlet-class>
+		<servlet-name>HomeServlet</servlet-name>
+		<servlet-class>com.test.project.HomeServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>TestProject</servlet-name>
-		<url-pattern>/testproject</url-pattern>
+		<servlet-name>HomeServlet</servlet-name>
+		<url-pattern>/home</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>RegisterUserServlet</servlet-name>
@@ -41,8 +41,36 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/rateHotel</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>com.test.project.LoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>LogoutServlet</servlet-name>
+		<servlet-class>com.test.project.LogoutServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LogoutServlet</servlet-name>
+		<url-pattern>/logout</url-pattern>
+	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>VerifyEmail</servlet-name>
+		<servlet-class>com.test.project.VerifyEmailServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>VerifyEmail</servlet-name>
+		<url-pattern>/verifyEmail</url-pattern>
+	</servlet-mapping>
+	
+	<session-config>
+		<session-timeout>5</session-timeout>
+	</session-config>
 	
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>

@@ -27,7 +27,7 @@ public class Hotel {
 		this.name = name;
 		this.numRooms = numRooms;
 		this.numStars = numStars;
-		this.numOfUsers =1;
+		this.numOfUsers =0;
 	}
 	public String getName() {
 		return name;

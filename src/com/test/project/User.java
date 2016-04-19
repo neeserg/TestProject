@@ -1,5 +1,6 @@
 package com.test.project;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,15 +10,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
+
 @Entity
 @SequenceGenerator(name="seq", initialValue=1,allocationSize=100)
-public class User {
+public class User implements Serializable{
 
-public User(int age, String fName, String lName, String email) {
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+public User(int age, String fName, String lName, String email, List<String> passwordHash, String emailhash) {
 	this.age = age;
 	this.firstName = fName;
 	this.lastName = lName;
 	this.email = email;
+	this.passwordHash = passwordHash;
+	this.emailhash = emailhash;
+	this.activated =false;
 }
 
 
@@ -28,8 +37,11 @@ private int age;
 private String firstName;
 private String lastName;
 private String email;
+private List<String> passwordHash;
 private List<Long> hotelId= new ArrayList<Long>();
 private List<Integer> starRatings= new ArrayList<Integer>();
+private String emailhash;
+private boolean activated;
 public int getAge() {
 	return age;
 }
@@ -72,6 +84,24 @@ public List<Integer> getStarRatings() {
 }
 public void addStarRatings(int starRatings) {
 	this.starRatings.add(starRatings);
+}
+public List<String> getPasswordHash() {
+	return passwordHash;
+}
+public void setPasswordHash(List<String> passwordHash) {
+	this.passwordHash = passwordHash;
+}
+public String getEmailhash() {
+	return emailhash;
+}
+public void setEmailhash(String emailhash) {
+	this.emailhash = emailhash;
+}
+public boolean isActivated() {
+	return activated;
+}
+public void setActivated(boolean activated) {
+	this.activated = activated;
 }
 
 

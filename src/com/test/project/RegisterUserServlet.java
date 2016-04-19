@@ -8,6 +8,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 
@@ -24,44 +25,62 @@ public class RegisterUserServlet extends  CustomServlet {
 	protected void handleRequest(HttpServletRequest req,
 			HttpServletResponse resp) throws IOException, ServletException {
 		
-		
-
-		String fName = req.getParameter("fName");
-		String lName = req.getParameter("lName");
-		String email = req.getParameter("email");
-		String ageString =req.getParameter("age");
-		String hotelIdString = req.getParameter("hotelId");
-		String numStarsString = req.getParameter("stars");
-
-		if (fName == null || lName == null || email == null || ageString == null || hotelIdString ==null || numStarsString == null )
-		{
-			HotelService hotelService=new HotelService();
-			List<Hotel> hotels=hotelService.listHotels();
-			req.setAttribute("hotels", hotels);
-			RequestDispatcher requestDispatcher=req.getRequestDispatcher("/Register.jsp");
-			requestDispatcher.forward(req, resp);
-		}
-		else 
-		{
-			int age=Integer.parseInt(ageString);
-			Long hotelId = Long.valueOf(hotelIdString);
-			int numStars = Integer.parseInt(numStarsString);
+		HttpSession session = req.getSession(true);
+		if(session.getAttribute("login") == null || session.getAttribute("login") =="logged_out"){
 			
-			User user=new User(age, fName, lName, email);
-			user.addHotelId(hotelId);
-			user.addStarRatings(numStars);
-			UserService userService=new UserService();
-			if(userService.insertUser(user)){
-		   
-		    
-			RequestDispatcher requestDispatcher=req.getRequestDispatcher("/RateHotel.jsp");
-			requestDispatcher.forward(req, resp);
-			
-			}else{
-				RequestDispatcher requestDispatcher=req.getRequestDispatcher("/RegisterFailure.jsp");
+			String fName = req.getParameter("fName");
+			String lName = req.getParameter("lName");
+			String email = req.getParameter("email");
+			String ageString =req.getParameter("age");
+			String password = req.getParameter("password");
+			String errorMessage = "";
+
+			if (fName == null || lName == null || email == null || ageString == null || password == null)
+			{
+				req.setAttribute("Error", errorMessage);
+				RequestDispatcher requestDispatcher=req.getRequestDispatcher("/Register.jsp");
 				requestDispatcher.forward(req, resp);
 			}
+			else 
+			{
+				UserService userService=new UserService();
+				if (!userService.Check_email(email).isCheck_email()){
+					
+					int age=Integer.parseInt(ageString);
+					
+					List<String> password_hash = userService.getHashed_Password(password);
+					String emailHash = userService.get_Hash();
+					User user=new User(age, fName, lName, email,password_hash,emailHash);
+					
+					if(userService.insertUser(user)){
+						userService.sendEmail(user);
+						resp.sendRedirect("/verifyEmail");
+					
+					}
+					else{
+						RequestDispatcher requestDispatcher=req.getRequestDispatcher("/RegisterFailure.jsp");
+						requestDispatcher.forward(req, resp);
+					}
+					
+				}
+				else {
+					errorMessage = "Email already taken.";
+					req.setAttribute("Error", errorMessage);
+					RequestDispatcher requestDispatcher=req.getRequestDispatcher("/Register.jsp");
+					requestDispatcher.forward(req, resp);
+					
+				}
+			}
+			
 		}
+		
+		else if(session.getAttribute("login") != null && (String) session.getAttribute("login") =="logged_in"){
+			if(session.getAttribute("user") != null){
+				RequestDispatcher requestDispatcher=req.getRequestDispatcher("/Welcome.jsp");
+				requestDispatcher.forward(req, resp);
+			}
+
+		
 
 
 	}
@@ -71,4 +90,5 @@ public class RegisterUserServlet extends  CustomServlet {
 
 
 
+}
 }
